@@ -1,35 +1,20 @@
-"""
-            [J] [Z] [G]
-            [Z] [T] [S] [P] [R]
-[R]         [Q] [V] [B] [G] [J]
-[W] [W]     [N] [L] [V] [W] [C]
-[F] [Q]     [T] [G] [C] [T] [T] [W]
-[H] [D] [W] [W] [H] [T] [R] [M] [B]
-[T] [G] [T] [R] [B] [P] [B] [G] [G]
-[S] [S] [B] [D] [F] [L] [Z] [N] [L]
- 1   2   3   4   5   6   7   8   9
-
-I am just a human, reading this input
-and transforming it accordingly is a
-pain, I'll just hardcode it since it's
-not that long
-"""
-
-
-def get_data_noob(file):
-    starting_stacks = {1: ['R', 'W', 'F', 'H', 'T', 'S'], 2: ['W', 'Q', 'D', 'G', 'S'], 3: ['W', 'T', 'B'],
-                       4: ['J', 'Z', 'Q', 'N', 'T', 'W', 'R', 'D'], 5: ['Z', 'T', 'V', 'L', 'G', 'H', 'B', 'F'],
-                       6: ['G', 'S', 'B', 'V', 'C', 'T', 'P', 'L'], 7: ['P', 'G', 'W', 'T', 'R', 'B', 'Z'],
-                       8: ['R', 'J', 'C', 'T', 'M', 'G', 'N'], 9: ['W', 'B', 'G', 'L']}
-    rearrangements = list()
-    for line in open(file, 'r').read().splitlines():
+def get_data(file):
+    full_input = open(file).read().splitlines()
+    split_point = full_input.index('')
+    input_stacks, input_rearrangements = full_input[:split_point], full_input[split_point+1:]
+    starting_stacks, rearrangements = dict(), list()
+    for line in input_rearrangements:
         line = line.split(' ')
         rearrangements.append((int(line[1]), int(line[3]), int(line[5])))
+    for stack in input_stacks[-1].split():
+        starting_stacks[int(stack)] = list()
+    for line in input_stacks:
+        counter = 0
+        for i in range(1, len(line), 4):
+            counter += 1
+            if not line[i] == ' ':
+                starting_stacks[counter].append(line[i])
     return starting_stacks, rearrangements
-
-
-def get_data_full_parse(file):
-    pass
 
 
 def rearrange(rearrangement, stacks, crate_mover_version=9000):
@@ -51,13 +36,9 @@ def explore_stack_tops(stacks):
 
 
 def exercise(file, crate_mover_version=9000):
-    stacks, rearrangements = get_data_noob(file)
-    print('INIT: ', stacks.values())
-    print('\n\n')
+    stacks, rearrangements = get_data(file)
     for rearrangement in rearrangements:
         rearrange(rearrangement, stacks, crate_mover_version)
-        print('STEP: ', stacks.values())
-        print('\n\n')
     return explore_stack_tops(stacks)
 
 
