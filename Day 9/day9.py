@@ -15,7 +15,6 @@ def move_head(state, visited, move):
         elif direction == 'D':
             state['H'][1] -= 1
         move_tail(state, visited)
-        print(state.items())
 
 
 def distance(p1, p2):
