@@ -46,11 +46,10 @@ def get_monkey_business(notes, n_rounds, part):
         for i in range(len(notes)):
             execute_monkey_turn(notes, i, divisors_prod, part)
     monkey_inspections = [notes[j]['inspections'] for j in range(len(notes))]
-    print(monkey_inspections)
     monkey_inspections.sort()
     return monkey_inspections[-1] * monkey_inspections[-2]
 
 
-#print('The monkey business after 20 rounds is', get_monkey_business(get_notes('input.txt'), 20, 1))
+print('The monkey business after 20 rounds is', get_monkey_business(get_notes('input.txt'), 20, 1))
 print('The monkey business after 10000 rounds is', get_monkey_business(get_notes('input.txt'), 10000, 2))
 
